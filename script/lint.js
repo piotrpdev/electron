@@ -278,7 +278,10 @@ const LINTERS = [{
 
     // Run markdownlint on all Markdown files
     for (const chunk of chunkFilenames(filenames)) {
-      spawnAndCheckExitCode('markdownlint-cli2', chunk);
+      // https://github.com/artilleryio/artillery/issues/1757#issuecomment-1411348284
+      const cmd = IS_WINDOWS ? 'markdownlint-cli2.cmd' : 'markdownlint-cli2';
+
+      spawnAndCheckExitCode(cmd, chunk);
     }
 
     // Run the remaining checks only in docs
